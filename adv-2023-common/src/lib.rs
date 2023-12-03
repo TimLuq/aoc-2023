@@ -20,7 +20,10 @@ impl LineParser {
         if len == 0 {
             return None;
         }
-        Some(&self.line)
+        let line = self.line.as_str();
+        let line = line.strip_suffix('\n').unwrap_or(line);
+        let line = line.strip_suffix('\r').unwrap_or(line);
+        Some(line)
     }
 
     pub fn process<S, L, P: Fn(&str) -> L, F: FnMut(&mut S, L)>(&mut self, parser: P, mut f: F, state: &mut S) {
@@ -36,7 +39,7 @@ pub trait Task {
     type Output<'a>: Display where Self: 'a;
     fn parse<'a>(&self, line: &'a str) -> Self::Input<'a>;
     fn process(&mut self, input: Self::Input<'_>);
-    fn output(&self) -> Self::Output<'_>;
+    fn output(&mut self) -> Self::Output<'_>;
     fn run(&mut self, path: &str) -> Self::Output<'_> {
         let mut par = LineParser::new(path);
         while let Some(line) = par.next() {
@@ -81,7 +84,7 @@ impl<I: 'static> Task for SumTask<I> {
         (self.f)(self, input);
     }
 
-    fn output(&self) -> Self::Output<'_> {
+    fn output(&mut self) -> Self::Output<'_> {
         self.sum
     }
 }
