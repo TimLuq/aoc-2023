@@ -1,0 +1,12 @@
+[workspace]
+
+members = [
+    "adv-2023-common",
+    "adv-2023-day1",
+    "adv-2023-day2",
+]
+
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
