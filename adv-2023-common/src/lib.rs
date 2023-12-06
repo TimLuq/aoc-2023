@@ -1,5 +1,8 @@
-use std::{io::{BufReader, BufRead}, fs::File, fmt::Display};
-
+use std::{
+    fmt::Display,
+    fs::File,
+    io::{BufRead, BufReader},
+};
 
 pub struct LineParser {
     line: String,
@@ -26,7 +29,12 @@ impl LineParser {
         Some(line)
     }
 
-    pub fn process<S, L, P: Fn(&str) -> L, F: FnMut(&mut S, L)>(&mut self, parser: P, mut f: F, state: &mut S) {
+    pub fn process<S, L, P: Fn(&str) -> L, F: FnMut(&mut S, L)>(
+        &mut self,
+        parser: P,
+        mut f: F,
+        state: &mut S,
+    ) {
         while let Some(line) = self.next() {
             let l = parser(line);
             f(state, l);
@@ -35,8 +43,12 @@ impl LineParser {
 }
 
 pub trait Task {
-    type Input<'a> where Self: 'a;
-    type Output<'a>: Display where Self: 'a;
+    type Input<'a>
+    where
+        Self: 'a;
+    type Output<'a>: Display
+    where
+        Self: 'a;
     fn parse<'a>(&self, line: &'a str) -> Self::Input<'a>;
     fn process(&mut self, input: Self::Input<'_>);
     fn output(&mut self) -> Self::Output<'_>;
@@ -58,11 +70,7 @@ pub struct SumTask<I> {
 
 impl<I> SumTask<I> {
     pub fn new(p: fn(&SumTask<I>, &str) -> I, f: fn(&mut SumTask<I>, num: I)) -> Self {
-        Self {
-            sum: 0,
-            p,
-            f,
-        }
+        Self { sum: 0, p, f }
     }
 }
 
@@ -88,4 +96,3 @@ impl<I: 'static> Task for SumTask<I> {
         self.sum
     }
 }
-

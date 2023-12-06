@@ -34,12 +34,20 @@ impl ParsedLine {
                 }
             } else if active {
                 active = false;
-                nums.push(NumSpan { val, start: start as u32, end: end as u32 });
+                nums.push(NumSpan {
+                    val,
+                    start: start as u32,
+                    end: end as u32,
+                });
             }
             i += 1;
         }
         if active {
-            nums.push(NumSpan { val, start: start as u32, end: end as u32 });
+            nums.push(NumSpan {
+                val,
+                start: start as u32,
+                end: end as u32,
+            });
         }
         nums
     }
@@ -90,13 +98,17 @@ impl State {
         self.sym.clear();
     }
     fn matches(&self, find_after: u32, find_before: u32) -> bool {
-        self.old_old_sym.iter().any(|&s| {
-            s >= find_after && s <= find_before
-        }) || self.old_sym.iter().any(|&s| {
-            s >= find_after && s <= find_before
-        }) || self.sym.iter().any(|&s| {
-            s >= find_after && s <= find_before
-        })
+        self.old_old_sym
+            .iter()
+            .any(|&s| s >= find_after && s <= find_before)
+            || self
+                .old_sym
+                .iter()
+                .any(|&s| s >= find_after && s <= find_before)
+            || self
+                .sym
+                .iter()
+                .any(|&s| s >= find_after && s <= find_before)
     }
 }
 

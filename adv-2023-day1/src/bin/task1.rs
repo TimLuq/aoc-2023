@@ -2,7 +2,7 @@ use adv_2023_common::{SumTask, Task};
 
 struct ParsedLine {
     pub fst: u64,
-    pub lst: u64
+    pub lst: u64,
 }
 
 impl ParsedLine {
@@ -21,7 +21,7 @@ impl ParsedLine {
         }
         Self {
             fst,
-            lst: lst as u64
+            lst: lst as u64,
         }
     }
 }

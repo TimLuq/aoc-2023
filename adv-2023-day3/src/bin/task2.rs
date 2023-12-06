@@ -34,12 +34,20 @@ impl ParsedLine {
                 }
             } else if active {
                 active = false;
-                nums.push(NumSpan { val, start: start as u32, end: end as u32 });
+                nums.push(NumSpan {
+                    val,
+                    start: start as u32,
+                    end: end as u32,
+                });
             }
             i += 1;
         }
         if active {
-            nums.push(NumSpan { val, start: start as u32, end: end as u32 });
+            nums.push(NumSpan {
+                val,
+                start: start as u32,
+                end: end as u32,
+            });
         }
         nums
     }

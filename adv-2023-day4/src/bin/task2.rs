@@ -60,7 +60,10 @@ impl Task for State {
 }
 
 fn main() {
-    let mut state = State { mul: VecDeque::new(), agg: 0 };
+    let mut state = State {
+        mul: VecDeque::new(),
+        agg: 0,
+    };
     let res = state.run("adv-2023-day4/input/list.txt");
     println!("{}", res);
 }
