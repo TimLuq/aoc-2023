@@ -6,6 +6,7 @@ members = [
     "adv-2023-day2",
     "adv-2023-day3",
     "adv-2023-day4",
+    "adv-2023-day5",
 ]
 
 resolver = "2"
