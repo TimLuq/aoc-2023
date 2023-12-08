@@ -4,6 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "adv-2023-day4-task1"
+path = "src/bin/task1.rs"
+
+[[bin]]
+name = "adv-2023-day4-task2"
+path = "src/bin/task2.rs"
 
 [dependencies]
 adv-2023-common = { path = "../adv-2023-common" }

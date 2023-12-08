@@ -11,9 +11,20 @@ pub struct LineParser {
 
 impl LineParser {
     pub fn new(path: &str) -> Self {
-        Self {
-            file: BufReader::new(File::open(path).unwrap()),
-            line: String::with_capacity(64),
+        match File::open(path) {
+            Ok(file) => Self {
+                file: BufReader::new(file),
+                line: String::with_capacity(64),
+            },
+            Err(e) => match File::open(format!("../{path}")) {
+                Ok(file) => Self {
+                    file: BufReader::new(file),
+                    line: String::with_capacity(64),
+                },
+                Err(_) => {
+                    panic!("Failed to open file: {:?} ({:?})", path, e);
+                }
+            },
         }
     }
 
